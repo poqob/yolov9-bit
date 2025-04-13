@@ -1,0 +1,114 @@
+[34m[1mtrain_dual: [0mweights=, cfg=models/detect/yolov9-m.yaml, data=data/dataset.yaml, hyp=hyp.scratch-high.yaml, epochs=4, batch_size=8, imgsz=640, rect=False, resume=False, nosave=False, noval=False, noautoanchor=False, noplots=False, evolve=None, bucket=, cache=None, image_weights=False, device=0, multi_scale=False, single_cls=False, optimizer=SGD, sync_bn=False, workers=8, project=runs/train, name=yolov9-m, exist_ok=False, quad=False, cos_lr=False, flat_cos_lr=False, fixed_lr=False, label_smoothing=0.0, patience=100, freeze=[0], save_period=-1, seed=0, local_rank=-1, min_items=0, close_mosaic=15, entity=None, upload_dataset=False, bbox_interval=-1, artifact_alias=latest
+YOLO 🚀 32a30ad Python-3.12.3 torch-2.6.0+cu124 CUDA:0 (NVIDIA GeForce GTX 1650, 3719MiB)
+
+[34m[1mhyperparameters: [0mlr0=0.01, lrf=0.01, momentum=0.937, weight_decay=0.0005, warmup_epochs=3.0, warmup_momentum=0.8, warmup_bias_lr=0.1, box=7.5, cls=0.5, cls_pw=1.0, obj=0.7, obj_pw=1.0, dfl=1.5, iou_t=0.2, anchor_t=5.0, fl_gamma=0.0, hsv_h=0.015, hsv_s=0.7, hsv_v=0.4, degrees=0.0, translate=0.1, scale=0.9, shear=0.0, perspective=0.0, flipud=0.0, fliplr=0.5, mosaic=1.0, mixup=0.15, copy_paste=0.3
+[34m[1mClearML: [0mrun 'pip install clearml' to automatically track, visualize and remotely train YOLO 🚀 in ClearML
+[34m[1mComet: [0mrun 'pip install comet_ml' to automatically track and visualize YOLO 🚀 runs in Comet
+[34m[1mTensorBoard: [0mStart with 'tensorboard --logdir runs/train', view at http://localhost:6006/
+Overriding model.yaml nc=80 with nc=6
+
+                 from  n    params  module                                  arguments                     
+  0                -1  1         0  models.common.Silence                   []                            
+  1                -1  1       928  models.common.Conv                      [3, 32, 3, 2]                 
+  2                -1  1     18560  models.common.Conv                      [32, 64, 3, 2]                
+  3                -1  1    171648  models.common.RepNCSPELAN4              [64, 128, 128, 64, 1]         
+  4                -1  1    276960  models.common.AConv                     [128, 240]                    
+  5                -1  1    629520  models.common.RepNCSPELAN4              [240, 240, 240, 120, 1]       
+  6                -1  1    778320  models.common.AConv                     [240, 360]                    
+  7                -1  1   1414080  models.common.RepNCSPELAN4              [360, 360, 360, 180, 1]       
+  8                -1  1   1556160  models.common.AConv                     [360, 480]                    
+  9                -1  1   2511840  models.common.RepNCSPELAN4              [480, 480, 480, 240, 1]       
+ 10                -1  1    577440  models.common.SPPELAN                   [480, 480, 240]               
+ 11                -1  1         0  torch.nn.modules.upsampling.Upsample    [None, 2, 'nearest']          
+ 12           [-1, 7]  1         0  models.common.Concat                    [1]                           
+ 13                -1  1   1586880  models.common.RepNCSPELAN4              [840, 360, 360, 180, 1]       
+ 14                -1  1         0  torch.nn.modules.upsampling.Upsample    [None, 2, 'nearest']          
+ 15           [-1, 5]  1         0  models.common.Concat                    [1]                           
+ 16                -1  1    715920  models.common.RepNCSPELAN4              [600, 240, 240, 120, 1]       
+ 17                -1  1    397808  models.common.AConv                     [240, 184]                    
+ 18          [-1, 13]  1         0  models.common.Concat                    [1]                           
+ 19                -1  1   1480320  models.common.RepNCSPELAN4              [544, 360, 360, 180, 1]       
+ 20                -1  1    778080  models.common.AConv                     [360, 240]                    
+ 21          [-1, 10]  1         0  models.common.Concat                    [1]                           
+ 22                -1  1   2627040  models.common.RepNCSPELAN4              [720, 480, 480, 240, 1]       
+ 23                 5  1     57840  models.common.CBLinear                  [240, [240]]                  
+ 24                 7  1    216600  models.common.CBLinear                  [360, [240, 360]]             
+ 25                 9  1    519480  models.common.CBLinear                  [480, [240, 360, 480]]        
+ 26                 0  1       928  models.common.Conv                      [3, 32, 3, 2]                 
+ 27                -1  1     18560  models.common.Conv                      [32, 64, 3, 2]                
+ 28                -1  1    171648  models.common.RepNCSPELAN4              [64, 128, 128, 64, 1]         
+ 29                -1  1    276960  models.common.AConv                     [128, 240]                    
+ 30  [23, 24, 25, -1]  1         0  models.common.CBFuse                    [[0, 0, 0]]                   
+ 31                -1  1    629520  models.common.RepNCSPELAN4              [240, 240, 240, 120, 1]       
+ 32                -1  1    778320  models.common.AConv                     [240, 360]                    
+ 33      [24, 25, -1]  1         0  models.common.CBFuse                    [[1, 1]]                      
+ 34                -1  1   1414080  models.common.RepNCSPELAN4              [360, 360, 360, 180, 1]       
+ 35                -1  1   1556160  models.common.AConv                     [360, 480]                    
+ 36          [25, -1]  1         0  models.common.CBFuse                    [[2]]                         
+ 37                -1  1   2511840  models.common.RepNCSPELAN4              [480, 480, 480, 240, 1]       
+ 38[31, 34, 37, 16, 19, 22]  1   9097988  models.yolo.DualDDetect                 [6, [240, 360, 480, 240, 360, 480]]
+yolov9-m summary: 939 layers, 32771428 parameters, 32771396 gradients, 132.4 GFLOPs
+
+[34m[1mAMP: [0mchecks passed ✅
+[34m[1moptimizer:[0m SGD(lr=0.01) with parameter groups 230 weight(decay=0.0), 247 weight(decay=0.0005), 245 bias
+[34m[1malbumentations: [0m1 validation error for InitSchema
+size
+  Field required [type=missing, input_value={'scale': (0.8, 1.0), 'ra...'mask_interpolation': 0}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+[34m[1mtrain: [0mScanning /mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/data/train.cache... 162 images, 0 backgrounds, 0 corrupt: 100%|██████████| 162/162 00:00[34m[1mtrain: [0mScanning /mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/data/train.cache... 162 images, 0 backgrounds, 0 corrupt: 100%|██████████| 162/162 00:00
+[34m[1mval: [0mScanning /mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/data/val.cache... 34 images, 0 backgrounds, 0 corrupt: 100%|██████████| 34/34 00:00[34m[1mval: [0mScanning /mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/data/val.cache... 34 images, 0 backgrounds, 0 corrupt: 100%|██████████| 34/34 00:00
+[34m[1mval: [0mWARNING ⚠️ /mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/data/val/182.png: 1 duplicate labels removed
+Plotting labels to runs/train/yolov9-m/labels.jpg... 
+/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/train_dual.py:255: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=amp)
+Image sizes 640 train, 640 val
+Using 8 dataloader workers
+Logging results to [1mruns/train/yolov9-m[0m
+Starting training for 4 epochs...
+
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+  0%|          | 0/21 00:00/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/train_dual.py:313: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(amp):
+  0%|          | 0/21 00:01
+Traceback (most recent call last):
+  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/train_dual.py", line 644, in <module>
+    main(opt)
+  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/train_dual.py", line 538, in main
+    train(opt.hyp, opt, device, callbacks)
+  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/train_dual.py", line 314, in train
+    pred = model(imgs)  # forward
+           ^^^^^^^^^^^
+  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/models/yolo.py", line 633, in forward
+    return self._forward_once(x, profile, visualize)  # single-scale inference, train
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/models/yolo.py", line 533, in _forward_once
+    x = m(x)  # run
+        ^^^^
+  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/models/common.py", line 722, in forward
+    outs = self.conv(x).split(self.c2s, dim=1)
+           ^^^^^^^^^^^^
+  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/venv/lib/python3.12/site-packages/torch/nn/modules/conv.py", line 554, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/venv/lib/python3.12/site-packages/torch/nn/modules/conv.py", line 549, in _conv_forward
+    return F.conv2d(
+           ^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 3.63 GiB of which 17.88 MiB is free. Including non-PyTorch memory, this process has 3.61 GiB memory in use. Of the allocated memory 3.52 GiB is allocated by PyTorch, and 21.15 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

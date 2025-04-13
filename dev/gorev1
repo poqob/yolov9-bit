@@ -1,0 +1,26 @@
+; Değerli öğrencilerim,
+; Sizlere aktivasyon geliştirdiğim aktivasyon fonksiyonunu sunuyorum. 
+; Sizlerden ilk istediğim görev şudur:
+; 1-Yüklediğim dataset üzerinde orijinal mevcut YOLO'nun 7 sürümünü çalıştırmanız
+; Örneğin YOLOv9-c,YOLOv9-m,YOLOv9-s,YOLOv9-t,YOLOv9...
+; 2-Ardından bu mimarilerin sonucunu kaydetmenizi sizden rica ediyorum
+; Örneğin YOLOv9'u çalıştırınız. Neler çıktı olarak üretiliyor? Presion Eğrisi
+; Recall Eğrisi, Precision/Recall eğrisi, confusion matrix, ap ya da map çıktıları
+; bunları yolov9 klasörüne koymanız. En sonunda githubta bir dosya açıp oraya ekleyeceğz
+; ----- bu KISMA KADAR FARKLI OLAN TEK ŞEY GÜNCEL VERİ KÜMESİNİ KULLANMANIZ ----
+; Şimdi ikinci görevi sizlere açıklıyorum.
+; İlk kısımda bir mimari en başarılı sonucu üretecek. Onu siz yorumlayamazsanız sonuçları
+; birlikte yorumlayabiliriz. Ardından istediğim ****common.py***** de eklediğim ve makale 
+; olarak yazdığım aktivasyon fonksiyonu ile sonuç elde etmeniz.
+; (Makalem henüz değerlendirilme aşamasında bu nedenle sizden ricam fonksiyonu kimse ile 
+; paylaşmamanız. )
+; Geliştirdiğim bu aktivasyon fonksiyonuna ilişkin performans metriklerini de dosyalamayı. 
+; unutmayalım. Hedeflenen tabii ki daha performansın daha yüksek olması
+; --------
+; Üçüncü göreviniz de sizler bu aktivasyon fonksiyonunu kendi özgünlükleriniz ile
+; geliştirip performansı optimize etmeniz.
+
+; *****
+
+; BU görevleri yaptığınız taktirde İKİNCİ AŞAMA'nın görevlerini veriyor olacağım.
+; BAŞARILAR 
