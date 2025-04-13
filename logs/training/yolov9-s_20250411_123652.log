@@ -1,132 +1,0 @@
-[34m[1mtrain_dual: [0mweights=, cfg=models/detect/yolov9-s.yaml, data=data/dataset.yaml, hyp=hyp.scratch-high.yaml, epochs=4, batch_size=8, imgsz=640, rect=False, resume=False, nosave=False, noval=False, noautoanchor=False, noplots=False, evolve=None, bucket=, cache=None, image_weights=False, device=0, multi_scale=False, single_cls=False, optimizer=SGD, sync_bn=False, workers=8, project=runs/train, name=yolov9-s, exist_ok=False, quad=False, cos_lr=False, flat_cos_lr=False, fixed_lr=False, label_smoothing=0.0, patience=100, freeze=[0], save_period=-1, seed=0, local_rank=-1, min_items=0, close_mosaic=15, entity=None, upload_dataset=False, bbox_interval=-1, artifact_alias=latest
-YOLO 🚀 32a30ad Python-3.12.3 torch-2.6.0+cu124 CUDA:0 (NVIDIA GeForce GTX 1650, 3719MiB)
-
-[34m[1mhyperparameters: [0mlr0=0.01, lrf=0.01, momentum=0.937, weight_decay=0.0005, warmup_epochs=3.0, warmup_momentum=0.8, warmup_bias_lr=0.1, box=7.5, cls=0.5, cls_pw=1.0, obj=0.7, obj_pw=1.0, dfl=1.5, iou_t=0.2, anchor_t=5.0, fl_gamma=0.0, hsv_h=0.015, hsv_s=0.7, hsv_v=0.4, degrees=0.0, translate=0.1, scale=0.9, shear=0.0, perspective=0.0, flipud=0.0, fliplr=0.5, mosaic=1.0, mixup=0.15, copy_paste=0.3
-[34m[1mClearML: [0mrun 'pip install clearml' to automatically track, visualize and remotely train YOLO 🚀 in ClearML
-[34m[1mComet: [0mrun 'pip install comet_ml' to automatically track and visualize YOLO 🚀 runs in Comet
-[34m[1mTensorBoard: [0mStart with 'tensorboard --logdir runs/train', view at http://localhost:6006/
-Overriding model.yaml nc=80 with nc=6
-
-                 from  n    params  module                                  arguments                     
-  0                -1  1       928  models.common.Conv                      [3, 32, 3, 2]                 
-  1                -1  1     18560  models.common.Conv                      [32, 64, 3, 2]                
-  2                -1  1     31104  models.common.ELAN1                     [64, 64, 64, 32]              
-  3                -1  1     73984  models.common.AConv                     [64, 128]                     
-  4                -1  1    258432  models.common.RepNCSPELAN4              [128, 128, 128, 64, 3]        
-  5                -1  1    221568  models.common.AConv                     [128, 192]                    
-  6                -1  1    579648  models.common.RepNCSPELAN4              [192, 192, 192, 96, 3]        
-  7                -1  1    442880  models.common.AConv                     [192, 256]                    
-  8                -1  1   1028864  models.common.RepNCSPELAN4              [256, 256, 256, 128, 3]       
-  9                -1  1    164608  models.common.SPPELAN                   [256, 256, 128]               
- 10                -1  1         0  torch.nn.modules.upsampling.Upsample    [None, 2, 'nearest']          
- 11           [-1, 6]  1         0  models.common.Concat                    [1]                           
- 12                -1  1    628800  models.common.RepNCSPELAN4              [448, 192, 192, 96, 3]        
- 13                -1  1         0  torch.nn.modules.upsampling.Upsample    [None, 2, 'nearest']          
- 14           [-1, 4]  1         0  models.common.Concat                    [1]                           
- 15                -1  1    283008  models.common.RepNCSPELAN4              [320, 128, 128, 64, 3]        
- 16                -1  1    110784  models.common.AConv                     [128, 96]                     
- 17          [-1, 12]  1         0  models.common.Concat                    [1]                           
- 18                -1  1    598080  models.common.RepNCSPELAN4              [288, 192, 192, 96, 3]        
- 19                -1  1    221440  models.common.AConv                     [192, 128]                    
- 20           [-1, 9]  1         0  models.common.Concat                    [1]                           
- 21                -1  1   1061632  models.common.RepNCSPELAN4              [384, 256, 256, 128, 3]       
- 22                 8  1    164608  models.common.SPPELAN                   [256, 256, 128]               
- 23                -1  1         0  torch.nn.modules.upsampling.Upsample    [None, 2, 'nearest']          
- 24           [-1, 6]  1         0  models.common.Concat                    [1]                           
- 25                -1  1    628800  models.common.RepNCSPELAN4              [448, 192, 192, 96, 3]        
- 26                -1  1         0  torch.nn.modules.upsampling.Upsample    [None, 2, 'nearest']          
- 27           [-1, 4]  1         0  models.common.Concat                    [1]                           
- 28                -1  1    283008  models.common.RepNCSPELAN4              [320, 128, 128, 64, 3]        
- 29[28, 25, 22, 15, 18, 21]  1   2946500  models.yolo.DualDDetect                 [6, [128, 192, 256, 128, 192, 256]]
-yolov9-s summary: 1220 layers, 9747236 parameters, 9747204 gradients, 39.6 GFLOPs
-
-[34m[1mAMP: [0mchecks passed ✅
-[34m[1moptimizer:[0m SGD(lr=0.01) with parameter groups 291 weight(decay=0.0), 305 weight(decay=0.0005), 303 bias
-[34m[1malbumentations: [0m1 validation error for InitSchema
-size
-  Field required [type=missing, input_value={'scale': (0.8, 1.0), 'ra...'mask_interpolation': 0}, input_type=dict]
-    For further information visit https://errors.pydantic.dev/2.11/v/missing
-[34m[1mtrain: [0mScanning /mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/data/train.cache... 162 images, 0 backgrounds, 0 corrupt: 100%|██████████| 162/162 00:00[34m[1mtrain: [0mScanning /mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/data/train.cache... 162 images, 0 backgrounds, 0 corrupt: 100%|██████████| 162/162 00:00
-[34m[1mval: [0mScanning /mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/data/val.cache... 34 images, 0 backgrounds, 0 corrupt: 100%|██████████| 34/34 00:00[34m[1mval: [0mScanning /mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/data/val.cache... 34 images, 0 backgrounds, 0 corrupt: 100%|██████████| 34/34 00:00
-[34m[1mval: [0mWARNING ⚠️ /mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/data/val/182.png: 1 duplicate labels removed
-Plotting labels to runs/train/yolov9-s/labels.jpg... 
-/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/train_dual.py:255: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
-  scaler = torch.cuda.amp.GradScaler(enabled=amp)
-Image sizes 640 train, 640 val
-Using 8 dataloader workers
-Logging results to [1mruns/train/yolov9-s[0m
-Starting training for 4 epochs...
-
-      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
-  0%|          | 0/21 00:00/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/train_dual.py:313: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
-  with torch.cuda.amp.autocast(amp):
-        0/3      3.76G        nan        nan        nan        240        640:   0%|          | 0/21 00:03Exception in thread Thread-5 (plot_images):
-Traceback (most recent call last):
-  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
-    self.run()
-  File "/usr/lib/python3.12/threading.py", line 1010, in run
-    self._target(*self._args, **self._kwargs)
-  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/utils/plots.py", line 300, in plot_images
-    annotator.box_label(box, label, color=color)
-  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/utils/plots.py", line 86, in box_label
-    w, h = self.font.getsize(label)  # text width, height
-           ^^^^^^^^^^^^^^^^^
-AttributeError: 'FreeTypeFont' object has no attribute 'getsize'
-WARNING ⚠️ TensorBoard graph visualization failure Only tensors, lists, tuples of tensors, or dictionary of tensors can be output from traced functions
-        0/3      3.76G        nan        nan        nan        240        640:   5%|▍         | 1/21 00:06/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/train_dual.py:313: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
-  with torch.cuda.amp.autocast(amp):
-        0/3      3.59G        nan        nan        nan        227        640:   5%|▍         | 1/21 00:09        0/3      3.59G        nan        nan        nan        227        640:  10%|▉         | 2/21 00:09Exception in thread Thread-6 (plot_images):
-Traceback (most recent call last):
-  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
-    self.run()
-  File "/usr/lib/python3.12/threading.py", line 1010, in run
-    self._target(*self._args, **self._kwargs)
-  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/utils/plots.py", line 300, in plot_images
-    annotator.box_label(box, label, color=color)
-  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/utils/plots.py", line 86, in box_label
-    w, h = self.font.getsize(label)  # text width, height
-           ^^^^^^^^^^^^^^^^^
-AttributeError: 'FreeTypeFont' object has no attribute 'getsize'
-        0/3      3.59G        nan        nan        nan        198        640:  10%|▉         | 2/21 00:11        0/3      3.59G        nan        nan        nan        198        640:  14%|█▍        | 3/21 00:11Exception in thread Thread-7 (plot_images):
-Traceback (most recent call last):
-  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
-    self.run()
-  File "/usr/lib/python3.12/threading.py", line 1010, in run
-    self._target(*self._args, **self._kwargs)
-  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/utils/plots.py", line 300, in plot_images
-    annotator.box_label(box, label, color=color)
-  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/utils/plots.py", line 86, in box_label
-    w, h = self.font.getsize(label)  # text width, height
-           ^^^^^^^^^^^^^^^^^
-AttributeError: 'FreeTypeFont' object has no attribute 'getsize'
-        0/3      3.59G        nan        nan        nan        200        640:  14%|█▍        | 3/21 00:14        0/3      3.59G        nan        nan        nan        200        640:  19%|█▉        | 4/21 00:14        0/3      3.59G        nan        nan        nan        218        640:  19%|█▉        | 4/21 00:16        0/3      3.59G        nan        nan        nan        218        640:  24%|██▍       | 5/21 00:16        0/3      3.59G        nan        nan        nan        248        640:  24%|██▍       | 5/21 00:19        0/3      3.59G        nan        nan        nan        248        640:  29%|██▊       | 6/21 00:19        0/3      3.68G        nan        nan        nan        221        640:  29%|██▊       | 6/21 00:22        0/3      3.68G        nan        nan        nan        221        640:  33%|███▎      | 7/21 00:22        0/3      3.68G        nan        nan        nan        221        640:  33%|███▎      | 7/21 00:23
-Traceback (most recent call last):
-  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/train_dual.py", line 644, in <module>
-    main(opt)
-  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/train_dual.py", line 538, in main
-    train(opt.hyp, opt, device, callbacks)
-  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/train_dual.py", line 315, in train
-    loss, loss_items = compute_loss(pred, targets.to(device))  # loss scaled by batch_size
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/utils/loss_tal_dual.py", line 199, in __call__
-    target_labels, target_bboxes, target_scores, fg_mask = self.assigner(
-                                                           ^^^^^^^^^^^^^^
-  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/utils/tal/assigner.py", line 89, in forward
-    mask_pos, align_metric, overlaps = self.get_pos_mask(pd_scores, pd_bboxes, gt_labels, gt_bboxes, anc_points,
-                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/utils/tal/assigner.py", line 113, in get_pos_mask
-    mask_topk = self.select_topk_candidates(align_metric * mask_in_gts,
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/mnt/newdisk/dosyalar/Dosyalar/projeler/py/EKG-1005-TUBITAK/utils/tal/assigner.py", line 148, in select_topk_candidates
-    is_in_topk = F.one_hot(topk_idxs, num_anchors).sum(-2)
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 386.00 MiB. GPU 0 has a total capacity of 3.63 GiB of which 177.88 MiB is free. Including non-PyTorch memory, this process has 3.45 GiB memory in use. Of the allocated memory 2.93 GiB is allocated by PyTorch, and 427.80 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

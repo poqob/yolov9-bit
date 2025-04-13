@@ -32,18 +32,3 @@ class Harmonic(nn.Module):
     def extra_repr(self):
         return f'step={self.step}, maximum_degree={self.maximum_degree}, inplace={self.inplace}'
 
-
-# Functional interface for the activation function to match PyTorch's style
-def harmonic_activation(x, step=2, maximum_degree=9, inplace=False):
-    """Functional interface for Harmonic activation function.
-    
-    Args:
-        x (Tensor): Input tensor
-        step (int): Step size between terms
-        maximum_degree (int): Maximum power in the harmonic series
-        inplace (bool): Not used, kept for API compatibility
-        
-    Returns:
-        Tensor: Result of Harmonic activation
-    """
-    return harmonic(x, step, maximum_degree)
