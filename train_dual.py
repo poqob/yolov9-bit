@@ -8,6 +8,9 @@ from copy import deepcopy
 from datetime import datetime
 from pathlib import Path
 
+from dev.dev import Dev
+dev=Dev() # start Dev class as singleton instance.
+
 import numpy as np
 import torch
 import torch.distributed as dist
@@ -141,6 +144,11 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
     accumulate = max(round(nbs / batch_size), 1)  # accumulate loss before optimizing
     hyp['weight_decay'] *= batch_size * accumulate / nbs  # scale weight_decay
     optimizer = smart_optimizer(model, opt.optimizer, hyp['lr0'], hyp['momentum'], hyp['weight_decay'])
+
+
+    # Set activation function
+    if opt.activation is not None:
+        Dev.set_activation(opt.activation)
 
     # Scheduler
     if opt.cos_lr:
@@ -459,7 +467,7 @@ def parse_opt(known=False):
     parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--multi-scale', action='store_true', help='vary img-size +/- 50%%')
     parser.add_argument('--single-cls', action='store_true', help='train multi-class data as single-class')
-    parser.add_argument('--optimizer', type=str, choices=['SGD', 'Adam', 'AdamW', 'LION'], default='SGD', help='optimizer')
+    parser.add_argument('--optimizer', type=str, choices=Dev.get_optimizer_functions_list(), default='SGD', help='optimizer')
     parser.add_argument('--sync-bn', action='store_true', help='use SyncBatchNorm, only available in DDP mode')
     parser.add_argument('--workers', type=int, default=8, help='max dataloader workers (per RANK in DDP mode)')
     parser.add_argument('--project', default=ROOT / 'runs/train', help='save to project/name')
@@ -477,6 +485,8 @@ def parse_opt(known=False):
     parser.add_argument('--local_rank', type=int, default=-1, help='Automatic DDP Multi-GPU argument, do not modify')
     parser.add_argument('--min-items', type=int, default=0, help='Experimental')
     parser.add_argument('--close-mosaic', type=int, default=0, help='Experimental')
+    parser.add_argument('--activation', type=str, choices=Dev.get_activation_functions_list(), default='silu', help='activation function' )
+    
 
     # Logger arguments
     parser.add_argument('--entity', default=None, help='Entity')

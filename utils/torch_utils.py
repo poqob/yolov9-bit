@@ -310,6 +310,8 @@ def copy_attr(a, b, include=(), exclude=()):
         else:
             setattr(a, k, v)
 
+from dev.dev import Dev
+
 
 def smart_optimizer(model, name='Adam', lr=0.001, momentum=0.9, decay=1e-5):
     # YOLOv5 3-param group optimizer: 0) weights with decay, 1) weights no decay, 2) biases no decay
@@ -434,7 +436,9 @@ def smart_optimizer(model, name='Adam', lr=0.001, momentum=0.9, decay=1e-5):
     elif name == 'LION':
         optimizer = Lion(g[2], lr=lr, betas=(momentum, 0.99), weight_decay=0.0)
     else:
-        raise NotImplementedError(f'Optimizer {name} not implemented.')
+        optimizer = Dev.get_optimizer(name=name, params=g[2], lr=lr, momentum=momentum, weight_decay=0.0)
+        if optimizer is None:
+            raise NotImplementedError(f'Optimizer {name} not implemented.')
 
     optimizer.add_param_group({'params': g[0], 'weight_decay': decay})  # add g0 with weight_decay
     optimizer.add_param_group({'params': g[1], 'weight_decay': 0.0})  # add g1 (BatchNorm2d weights)

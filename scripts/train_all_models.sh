@@ -9,6 +9,8 @@ WORKERS=${1:-8}    # Default: 8 workers
 BATCH=${2:-16}      # Default: 8 batch size
 IMG_SIZE=${3:-640} # Default: 640 image size
 EPOCHS=${4:-100}   # Default: 100 epochs
+ACTIVATION=${7:-"silu"}  # Default: Silu activation function
+OPTIMIZER=${8:-"SGD"}   # Default: SGD optimizer
 
 # Display the parameters being used
 echo "Starting training with parameters:"
@@ -51,6 +53,8 @@ for MODEL in $MODEL_DIR/yolov9*.yaml; do
         --hyp hyp.scratch-high.yaml \
         --min-items 0 \
         --epochs $EPOCHS \
+        --activation $ACTIVATION \
+        --optimizer $OPTIMIZER \
         --close-mosaic 15 2>&1 | tee $LOG_FILE
     
     echo "Training for $MODEL_NAME completed. Log saved to $LOG_FILE"

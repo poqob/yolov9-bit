@@ -4,10 +4,13 @@
 
 # Define variables
 BATCH_SIZE=8
-IMG_SIZE=640
+IMG_SIZE=224
 MODEL_NAME="yolov9-t"
-EPOCHS=150
+EPOCHS=10
 CLOSE_MOSAIC=15
+ACTIVATION=${7:-"silu"}  # Default: Silu activation function
+OPTIMIZER=${8:-"SGD"}   # Default: SGD optimizer
+
 
 # Get custom name from command line if provided, otherwise use MODEL_NAME
 RUN_NAME=${1:-$MODEL_NAME}
@@ -16,4 +19,6 @@ python train_dual.py --workers 8 --device 0 --batch $BATCH_SIZE \
   --data data/dataset.yaml --img $IMG_SIZE \
   --cfg models/detect/$MODEL_NAME.yaml --weights '' \
   --name $RUN_NAME --hyp hyp.scratch-high.yaml \
-  --min-items 0 --epochs $EPOCHS --close-mosaic $CLOSE_MOSAIC
+  --min-items 0 --epochs $EPOCHS --close-mosaic $CLOSE_MOSAIC \
+  --activation $ACTIVATION \
+  --optimizer $OPTIMIZER \
