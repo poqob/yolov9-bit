@@ -30,6 +30,12 @@ from utils.general import (LOGGER, ROOT, Profile, check_requirements, check_suff
 from utils.plots import Annotator, colors, save_one_box
 from utils.torch_utils import copy_attr, smart_inference_mode
 
+# it seems that the classes never used in the code BUT DONT REMOVE THEM
+# because they are used in the model.yaml file :D
+
+from dev.layer.residual_block import ResBlock
+from dev.layer.enhanced_residual_block import ResBlockEnhanced
+
 
 def autopad(k, p=None, d=1):  # kernel, padding, dilation
     # Pad to 'same' shape outputs
@@ -38,67 +44,6 @@ def autopad(k, p=None, d=1):  # kernel, padding, dilation
     if p is None:
         p = k // 2 if isinstance(k, int) else [x // 2 for x in k]  # auto-pad
     return p
-
-
-########## ÖNERİLEN AKTİVASYON FONKSİYONU (MAKALESİ REVİZYON AŞAMASINDA)  ####
-########### DOLAYISIYLA BU AŞAMADA PAYLAŞILMAMASI ÖNEM ARZ ETMEKTEDİR.   #######
-# import tensorflow as tf
-# from tensorflow.keras.layers import Activation, Dense, Dropout, GlobalAveragePooling2D
-# from tensorflow.keras.models import Model
-# from tensorflow.keras.applications import MobileNetV2
-# from tensorflow.keras.optimizers import RMSprop
-# from tensorflow.keras.callbacks import EarlyStopping
-# import tensorflow as tf
-
-# #https://doi.org/10.3390/electronics12050689
-# #Yöntemin Adı: Soft-Clipping Swish 
-
-# def custom_activation_Soft_Clipping_swish(x, beta=1.0):
-#     return x / (1 + tf.exp(-beta * x))
-
-# #https://doi.org/10.1016/j.neunet.2023.02.008
-# #Yöntemin Adı: TanhSoft
-
-# def custom_activation_TanhSoft(x):
-#     return tf.tanh(x) + tf.math.log(1 + tf.exp(x))
-
-# #https://doi.org/10.1109/ICNN.2022.10124188
-# def custom_activation_HcLSH(x, alpha=1):
-#     return tf.maximum(0.0, x) + alpha * tf.minimum(0.0, x)
-
-# #https://doi.org/10.3390/math12030246
-# #Yöntemin Adı: NIPUNA
-
-# def custom_activation_NIPUNA(x):
-#     sigmoid_x = tf.sigmoid(x)
-#     return x * tf.maximum(0.0, sigmoid_x)
-
-
-# def softmax(x):
-#     exp_x = tf.exp(x - tf.reduce_max(x, axis=-1, keepdims=True))
-#     return exp_x / tf.reduce_sum(exp_x, axis=-1, keepdims=True)
-
-# def swish_softmax(x):
-#     exp_x = tf.exp(x - tf.reduce_max(x, axis=-1, keepdims=True))
-#     return (exp_x / tf.reduce_sum(exp_x, axis=-1, keepdims=True))
-
-
-# #chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://arxiv.org/pdf/1606.08415
-# def custom_erf_activation(x):
-#     return x * (1 + tf.math.erf(x / tf.sqrt(2.0))) / 2
-
-
-
-# def combined12(x):
-#     # Apply softmax
-#     softmax_x=softmax(custom_activation_HcLSH(custom_activation_TanhSoft(x)))*softmax(custom_erf_activation(x))
-#     return softmax_x
-
-
-
-
-
-
 
 
 from dev.dev import Dev
