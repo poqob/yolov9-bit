@@ -72,11 +72,13 @@ class Annotator:
         if self.pil:  # use PIL
             self.im = im if isinstance(im, Image.Image) else Image.fromarray(im)
             self.draw = ImageDraw.Draw(self.im)
+            # Smaller font size - reduced by 80%
             self.font = check_pil_font(font='Arial.Unicode.ttf' if non_ascii else font,
-                                       size=font_size or max(round(sum(self.im.size) / 2 * 0.035), 12))
+                                       size=font_size or max(round(sum(self.im.size) / 2 * 0.01), 4))
         else:  # use cv2
             self.im = im
-        self.lw = line_width or max(round(sum(im.shape) / 2 * 0.003), 2)  # line width
+        # Increased line width by 200%
+        self.lw = line_width or max(round(sum(im.shape) / 2 * 0.009), 5)  # much thicker line width
 
     def box_label(self, box, label='', color=(128, 128, 128), txt_color=(255, 255, 255)):
         # Add one xyxy box to image with label
@@ -97,14 +99,15 @@ class Annotator:
             cv2.rectangle(self.im, p1, p2, color, thickness=self.lw, lineType=cv2.LINE_AA)
             if label:
                 tf = max(self.lw - 1, 1)  # font thickness
-                w, h = cv2.getTextSize(label, 0, fontScale=self.lw / 3, thickness=tf)[0]  # text width, height
+                # Reduced font scale by 40%
+                w, h = cv2.getTextSize(label, 0, fontScale=self.lw / 5, thickness=tf)[0]  # text width, height
                 outside = p1[1] - h >= 3
                 p2 = p1[0] + w, p1[1] - h - 3 if outside else p1[1] + h + 3
                 cv2.rectangle(self.im, p1, p2, color, -1, cv2.LINE_AA)  # filled
                 cv2.putText(self.im,
                             label, (p1[0], p1[1] - 2 if outside else p1[1] + h + 2),
                             0,
-                            self.lw / 3,
+                            self.lw / 5,  # much smaller font scale
                             txt_color,
                             thickness=tf,
                             lineType=cv2.LINE_AA)
