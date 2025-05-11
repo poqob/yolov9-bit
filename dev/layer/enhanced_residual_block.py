@@ -1,6 +1,6 @@
 import math
 import torch.nn as nn
-from dev.layer.conv import Conv
+from dev.layer.utils import Conv
 
 class ResBlockEnhanced(nn.Module):
     """Enhanced ResNet style residual block with bottleneck design"""

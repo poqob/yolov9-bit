@@ -30,12 +30,8 @@ from utils.general import (LOGGER, ROOT, Profile, check_requirements, check_suff
 from utils.plots import Annotator, colors, save_one_box
 from utils.torch_utils import copy_attr, smart_inference_mode
 
-# it seems that the classes never used in the code BUT DONT REMOVE THEM
-# because they are used in the model.yaml file :D
 
-from dev.layer.residual_block import ResBlock
-from dev.layer.enhanced_residual_block import ResBlockEnhanced
-
+from dev.layer.export import *
 
 def autopad(k, p=None, d=1):  # kernel, padding, dilation
     # Pad to 'same' shape outputs

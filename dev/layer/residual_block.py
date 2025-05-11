@@ -1,7 +1,7 @@
 import math
 import torch.nn as nn
 from dev.dev import Dev
-from dev.layer.conv import Conv
+from dev.layer.utils import Conv
 
 class ResBlock(nn.Module):
     """ResNet style residual block with BN-ReLU-Conv pattern"""
