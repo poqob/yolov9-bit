@@ -113,6 +113,11 @@ head:
    # elan-2 block
    [-1, 1, RepNCSPELAN4, [64, 64, 32, 3]],  # 35
 
+
+
+   [35, 1, Dropout, [0.3]],                   # 39 - Dropout before pooling
+   [-1, 1, GlobalAvgPool2d, [True]],          # 40 - Global Average Pooling with keep_dim=True
+
    # detect
    [[35, 32, 29, 21, 24, 27], 1, DualDDetect, [nc]],  # Detect(P3, P4, P5)
   ]
