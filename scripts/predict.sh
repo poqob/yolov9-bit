@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Model adı ve girdi dosyası doğrudan tanımlanmış
-MODEL_NAME="yolov9-t-residual"
+MODEL_NAME="custom5"
 INPUT_FILE="data/val/10.png"
 
 # Tahmin işlemini çalıştır

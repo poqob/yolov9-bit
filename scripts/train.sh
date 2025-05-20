@@ -3,9 +3,9 @@
 # metrics for test computer: --batch 64 --img 640 --epochs 100 --close-mosaic 15
 
 # Define variables
-BATCH_SIZE=4
+BATCH_SIZE=2
 IMG_SIZE=640
-DEFAULT_MODEL_NAME="yolov9-t-residual"
+DEFAULT_MODEL_NAME="yolov9-t"
 MODEL_NAME=${1:-$DEFAULT_MODEL_NAME}  # Get model name from command line or use default
 EPOCHS=100
 CLOSE_MOSAIC=15

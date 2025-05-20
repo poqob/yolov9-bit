@@ -732,7 +732,8 @@ def parse_model(d, ch):  # model_dict, input_channels(3)
         if m in {
             Conv, AConv, ConvTranspose, 
             Bottleneck, SPP, SPPF, DWConv, BottleneckCSP, nn.ConvTranspose2d, DWConvTranspose2d, SPPCSPC, ADown,
-            ELAN1, RepNCSPELAN4, SPPELAN, ResBlock, ResBlockEnhanced}:
+            ELAN1, RepNCSPELAN4, SPPELAN, 
+             ResBlock, ResBlockEnhanced}:
             c1, c2 = ch[f], args[0]
             if c2 != no:  # if not output
                 c2 = make_divisible(c2 * gw, 8)
@@ -754,16 +755,43 @@ def parse_model(d, ch):  # model_dict, input_channels(3)
             c1 = ch[f]
             args = [c1, c2, *args[1:]]
         elif m is CBFuse:
-        
             c2 = ch[f[-1]]
         elif m is Dropout:
             c2 = ch[f]  # Dropout doesn't change channels
+        # TODO: channel, gw, gd
+        # Replace this section with proper handling for SE, MultiHeadAttention, and ChannelLayerNorm
+       # MultiHeadAttention için düzeltme
+        elif m is MultiHeadAttention:
+            c2 = ch[f]  # MultiHeadAttention preserves input channels
+            # Eğer args boşsa, embed_dim için ch[f] kullanın
+            if len(args) == 0:
+                args = [ch[f]]
+            elif len(args) == 1:
+                # Eğer sadece num_heads verilmişse, embed_dim ekleyin
+                args = [ch[f], args[0]]
+
+        # SE için düzeltme
+        elif m is SE:
+            c2 = ch[f]  # SE preserves input channels
+            # Eğer hiç argüman verilmemişse, kanal sayısını ve varsayılan ratio'yu kullan
+            if len(args) == 0:
+                args = [ch[f], 16]  # Default ratio of 16
+            elif len(args) == 1:
+                # Eğer sadece ratio verilmişse, in_channels ekleyin
+                args = [ch[f], args[0]]
+
+        # ChannelLayerNorm için düzeltme
+        elif m is ChannelLayerNorm:
+            c2 = ch[f]  # ChannelLayerNorm preserves input channels
+            # Eğer hiç argüman verilmemişse, kanal sayısını kullan
+            if len(args) == 0:
+                args = [ch[f]]
+            # Aksi halde YAML'da verildiği gibi kullan
         elif m is GlobalAvgPool2d:
             c2 = ch[f]  # GlobalAvgPool2d doesn't change channels
             # Eğer hiç argüman verilmemişse, varsayılan olarak keep_dim=True kullan
             if len(args) == 0:
                 args = [True]  # Default keep dimensions as True
-        # TODO: channel, gw, gd
         elif m in {Detect, DualDetect, TripleDetect, DDetect, DualDDetect, TripleDDetect, Segment, DSegment, DualDSegment, Panoptic}:
             args.append([ch[x] for x in f])
             # if isinstance(args[1], int):  # number of anchors

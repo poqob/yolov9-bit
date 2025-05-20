@@ -1,0 +1,127 @@
+# YOLOv9
+
+# parameters
+nc: 2  # number of classes
+depth_multiple: 1.0  # model depth multiple
+width_multiple: 1.0  # layer channel multiple
+#activation: nn.LeakyReLU(0.1)
+#activation: nn.ReLU()
+
+# anchors
+anchors: 3
+
+# gelan backbone
+backbone:
+  [
+   # conv down
+   [-1, 1, Conv, [16, 3, 2]],  # 0-P1/2
+
+   # conv down
+   [-1, 1, Conv, [32, 3, 2]],  # 1-P2/4
+   
+   # ResBlock ekleyelim (Hızlı gradyan akışı için başlangıçta basit ResBlock)
+   [-1, 3, ResBlock, [32]],  # 2 (3 ResBlock ardışık)
+   
+   # Gelişmiş ResBlock ile özellikleri zenginleştirelim
+   [-1, 1, ResBlockEnhanced, [32, 32]],  # 3
+   
+   # elan-1 block
+   [-1, 1, ELAN1, [32, 32, 16]],  # 4
+
+   # avg-conv down
+   [-1, 1, AConv, [64]],  # 5-P3/8
+   
+   # Özellik zenginleştirme
+   [-1, 1, ResBlockEnhanced, [64, 64]],  # 6
+
+   # elan-2 block
+   [-1, 1, RepNCSPELAN4, [64, 64, 32, 3]],  # 7
+
+   # avg-conv down
+   [-1, 1, AConv, [96]],  # 8-P4/16
+
+   # elan-2 block
+   [-1, 1, RepNCSPELAN4, [96, 96, 48, 3]],  # 9
+
+   # avg-conv down
+   [-1, 1, AConv, [128]],  # 10-P5/32
+
+   # elan-2 block
+   [-1, 1, RepNCSPELAN4, [128, 128, 64, 3]],  # 11
+  ]
+
+# elan head
+head:
+  [
+   # elan-spp block
+   [-1, 1, SPPELAN, [128, 64]],  # 12
+   
+   # ResBlockEnhanced ile zenginleştirme
+   [-1, 1, ResBlockEnhanced, [128, 128]],  # 13
+
+   # up-concat merge
+   [-1, 1, nn.Upsample, [None, 2, 'nearest']],  # 14
+   [[-1, 9], 1, Concat, [1]],  # 15 cat backbone P4
+   
+   # Concat sonrası özellikleri entegre etmek için
+   [-1, 1, ResBlockEnhanced, [224, 224]],  # 16
+
+   # elan-2 block
+   [-1, 1, RepNCSPELAN4, [96, 96, 48, 3]],  # 17
+
+   # up-concat merge
+   [-1, 1, nn.Upsample, [None, 2, 'nearest']],  # 18
+   [[-1, 7], 1, Concat, [1]],  # 19 cat backbone P3
+   
+   # Concat sonrası özellikleri entegre etmek için
+   [-1, 1, ResBlockEnhanced, [160, 160]],  # 20
+
+   # elan-2 block
+   [-1, 1, RepNCSPELAN4, [64, 64, 32, 3]],  # 21
+
+   # avg-conv-down merge
+   [-1, 1, AConv, [48]],  # 22
+   [[-1, 17], 1, Concat, [1]],  # 23 cat head P4
+
+   # elan-2 block
+   [-1, 1, RepNCSPELAN4, [96, 96, 48, 3]],  # 24 (P4/16-medium)
+
+   # avg-conv-down merge
+   [-1, 1, AConv, [64]],  # 25
+   [[-1, 13], 1, Concat, [1]],  # 26 cat head P5
+
+   # elan-2 block
+   [-1, 1, RepNCSPELAN4, [128, 128, 64, 3]],  # 27 (P5/32-large)
+   
+   # elan-spp block
+   [11, 1, SPPELAN, [128, 64]],  # 28
+   
+   # ResBlockEnhanced ile zenginleştirme (ikinci yol)
+   [-1, 1, ResBlockEnhanced, [128, 128]],  # 29
+
+   # up-concat merge
+   [-1, 1, nn.Upsample, [None, 2, 'nearest']],  # 30
+   [[-1, 9], 1, Concat, [1]],  # 31 cat backbone P4
+
+   # elan-2 block
+   [-1, 1, RepNCSPELAN4, [96, 96, 48, 3]],  # 32
+
+   # up-concat merge
+   [-1, 1, nn.Upsample, [None, 2, 'nearest']],  # 33
+   [[-1, 7], 1, Concat, [1]],  # 34 cat backbone P3
+
+   # elan-2 block
+   [-1, 1, RepNCSPELAN4, [64, 64, 32, 3]],  # 35
+
+    
+
+  # FEATURE ENHANCEMENT - Detection modeli için özellik eklentileri
+  [-1, 1, Dropout, [0.3]],                  # 36 - Dropout (0.3)
+  [-1, 1, ResBlockEnhanced, [64, 64]],      # 37 - Enhanced Residual Block (BatchNorm içerir)
+  [-1, 1, GlobalAvgPool2d, [True]],         # 38 - Global Average Pooling (keep_dim=True)
+  [-1, 1, MultiHeadAttention, [64, 4]],     # 39 - Multi-head attention (embed_dim=64, num_heads=4)
+  [-1, 1, ChannelLayerNorm, [64]],          # 40 - Layer normalization (num_channels=64)
+
+   # detect
+   [[35, 32, 29, 21, 24, 27], 1, DualDDetect, [nc]],  # Detect(P3, P4, P5)
+  ]
