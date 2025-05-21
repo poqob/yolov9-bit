@@ -117,9 +117,9 @@ head:
 
   # FEATURE ENHANCEMENT - Detection modeli için özellik eklentileri
   [-1, 1, Dropout, [0.3]],                  # 36 - Dropout (0.3)
-  [-1, 1, ResBlockEnhanced, [64, 64]],      # 37 - Enhanced Residual Block (BatchNorm içerir)
-  [-1, 1, GlobalAvgPool2d, [True]],         # 38 - Global Average Pooling (keep_dim=True)
-  [-1, 1, MultiHeadAttention, [64, 4]],     # 39 - Multi-head attention (embed_dim=64, num_heads=4)
+  [-1, 1, MBConv, [64, 64, 4.0, 1]],        # 37 - MBConv block (64in, 64out, 4x expansion, stride=1)
+  [-1, 1, ResBlockEnhanced, [64, 64]],      # 38 - Enhanced Residual Block (BatchNorm içerir)
+  [-1, 1, GlobalAvgPool2d, [True]],         # 39 - Global Average Pooling (keep_dim=True)
   [-1, 1, ChannelLayerNorm, [64]],          # 40 - Layer normalization (num_channels=64)
 
    # detect
