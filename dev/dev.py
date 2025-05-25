@@ -3,6 +3,7 @@ import json
 import torch
 from utils.lion import Lion
 import torch.nn as nn
+from dev.functions.sinlu import SinLU, SinLUPositive
 from dev.optimizer.custom_rms_drop import CustomRMSpropOptimizer
 class Dev:
     _activation:str= "silu"
@@ -25,6 +26,10 @@ class Dev:
         "tanh": nn.Tanh(),
         "sigmoid": nn.Sigmoid(),
         "softmax": nn.Softmax(dim=1),
+        "sinlu": SinLU(k=1),
+        "sinlu0.5": SinLU(k=0.5),
+        "sinlu_pozitive": SinLUPositive(k=1),
+        "sinlu_pozitive0.5": SinLUPositive(k=0.5),
     }
 
     _optimizer_functions = {
@@ -105,3 +110,8 @@ class Dev:
         else:
             print(f"Optimizer '{name}' not found. Available options: {list(cls._optimizer_functions.keys())}")
             return None
+        
+
+# selu, h_swish, h_sigmoid, elu, celu, sinlu
+# sgd, adam, adamw, lion
+# implementation-residual, implementation-t-cbam, implementation-t-mbconv, implementation-t-v2, implementation-t

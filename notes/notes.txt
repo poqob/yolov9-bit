@@ -1,2 +1,0 @@
-torch's load function contains weights_only parameter which is optionaly set to None.
-set it False to evaluate the model!
