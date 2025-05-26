@@ -2,7 +2,6 @@ import os
 import time
 import subprocess
 import tempfile
-import shutil
 from flask import Flask, request, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 
@@ -53,10 +52,11 @@ def detect():
 
         # Find the label file
         exp_dir = os.path.join(outdir, 'exp')
-        label_files = [f for f in os.listdir(os.path.join(exp_dir, 'labels')) if f.endswith('.txt')]
+        label_dir = os.path.join(exp_dir, 'labels')
+        label_files = [f for f in os.listdir(label_dir) if f.endswith('.txt')]
         if not label_files:
             return jsonify({'boxes': [], 'image_url': None})
-        label_path = os.path.join(exp_dir, 'labels', label_files[0])
+        label_path = os.path.join(label_dir, label_files[0])
 
         # Parse YOLO label file
         boxes = []
@@ -74,19 +74,24 @@ def detect():
                         'confidence': float(conf)
                     })
 
-        # Optionally, copy the annotated image to static/images and return its URL
-        result_img_name = f"result_{int(time.time())}.jpg"
-        static_img_dir = os.path.join('static', 'images')
-        os.makedirs(static_img_dir, exist_ok=True)
-        # Find the result image (same name as input)
+        # Optionally, copy the annotated image to a tmp file and return its URL
         result_img_path = os.path.join(exp_dir, filename)
         image_url = None
         if os.path.exists(result_img_path):
-            static_img_path = os.path.join(static_img_dir, result_img_name)
-            shutil.copy(result_img_path, static_img_path)
-            image_url = f"/images/{result_img_name}"
+            import uuid
+            tmp_img_name = f"tmp_{uuid.uuid4().hex}.jpg"
+            tmp_img_dir = os.path.join('static', 'tmp')
+            os.makedirs(tmp_img_dir, exist_ok=True)
+            tmp_img_path = os.path.join(tmp_img_dir, tmp_img_name)
+            with open(result_img_path, 'rb') as src, open(tmp_img_path, 'wb') as dst:
+                dst.write(src.read())
+            image_url = f"/tmp/{tmp_img_name}"
 
         return jsonify({'boxes': boxes, 'image_url': image_url})
+
+@app.route('/tmp/<filename>')
+def serve_tmp_image(filename):
+    return send_from_directory(os.path.join('static', 'tmp'), filename)
 
 @app.route('/models', methods=['GET'])
 def list_models():
@@ -104,10 +109,6 @@ def list_models():
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
-
-@app.route('/images/<filename>')
-def serve_image(filename):
-    return send_from_directory(os.path.join('static', 'images'), filename)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
