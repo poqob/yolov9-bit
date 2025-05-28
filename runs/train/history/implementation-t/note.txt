@@ -1,0 +1,5 @@
+residual blocks
+dropout
+se
+attention
+channel layer norm
