@@ -5,6 +5,7 @@
 gitpython
 ipython
 matplotlib>=3.2.2
+mysqlclient
 numpy>=1.18.5
 opencv-python>=4.1.1
 Pillow>=7.1.2
@@ -49,3 +50,4 @@ pycocotools>=2.0
 # Web Service (Flask UI) -----------------------------------------------------
 Flask>=2.0.0
 Werkzeug>=2.0.0
+pymongo

@@ -4,15 +4,27 @@ import subprocess
 import tempfile
 from flask import Flask, request, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
+from datetime import datetime, timezone
+from pymongo import MongoClient
+import base64
 
 CONF_THRES = 0.25
 
 app = Flask(__name__, static_folder='static', static_url_path='/')
 
+# MongoDB connection (adjust URI as needed)
+client = MongoClient('mongodb://localhost:27017/')
+db = client['ekg_vision']
+scan_results = db['scan_results']
+
 @app.route('/detect', methods=['POST'])
 def detect():
     # Allow model selection
     model_name = request.form.get('model_name', 'implementation-residual_h_swish_SGD')
+    # Handle user_id and patient_id fields
+    user_id = request.form.get('user_id')
+    patient_id = request.form.get('patient_id')
+   
     # Sanitize model name (only allow alphanumeric, dash, underscore)
     import re
     if not re.match(r'^[\w\-]+$', model_name):
@@ -25,6 +37,12 @@ def detect():
         return jsonify({'error': 'No image file provided'}), 400
     image_file = request.files['image']
     filename = secure_filename(image_file.filename)
+
+    # Read image as base64 for MongoDB storage
+    image_file.seek(0)
+    image_bytes = image_file.read()
+    image_b64 = base64.b64encode(image_bytes).decode('utf-8')
+    image_file.seek(0)  # Reset for saving to disk
 
     # Create a temp directory for this request
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -77,6 +95,7 @@ def detect():
         # Optionally, copy the annotated image to a tmp file and return its URL
         result_img_path = os.path.join(exp_dir, filename)
         image_url = None
+        result_image_b64 = None
         if os.path.exists(result_img_path):
             import uuid
             tmp_img_name = f"tmp_{uuid.uuid4().hex}.jpg"
@@ -84,8 +103,24 @@ def detect():
             os.makedirs(tmp_img_dir, exist_ok=True)
             tmp_img_path = os.path.join(tmp_img_dir, tmp_img_name)
             with open(result_img_path, 'rb') as src, open(tmp_img_path, 'wb') as dst:
-                dst.write(src.read())
+                img_bytes = src.read()
+                dst.write(img_bytes)
+                result_image_b64 = base64.b64encode(img_bytes).decode('utf-8')
             image_url = f"/tmp/{tmp_img_name}"
+
+        # Save to MongoDB only if all required fields are present
+        try:
+            scan_results.insert_one({
+                'user_id': user_id,
+                'patient_id': patient_id,
+                'model_name': model_name,
+                'date': datetime.now(timezone.utc),
+                'image': image_b64,
+                'result_image': result_image_b64,
+                'boxes': boxes
+            })
+        except Exception as e:
+            print(f"MongoDB insert error: {e}")
 
         return jsonify({'boxes': boxes, 'image_url': image_url})
 
