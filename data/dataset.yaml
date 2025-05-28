@@ -1,0 +1,9 @@
+# YOLOv9 dataset configuration
+path: /mnt/newdisk/dosyalar/Dosyalar/projeler/py/yolov9-bit/data  # dataset root directory
+train: train  # train images relative to 'path'
+val: val  # validation images relative to 'path'
+test: test  # test images relative to 'path'
+
+# Classes
+nc: 2  # number of classes
+names: ['anormal', 'normal']  # class names

@@ -1,5 +1,6 @@
-data/
 runs/
+runs/train/
+runs/detect/
 venv/
 .todo
 *.pyc

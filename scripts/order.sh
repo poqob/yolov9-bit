@@ -29,7 +29,7 @@ done
 
 # Define arrays for models, activations, and optimizers
 models=("implementation-residual" "implementation-t-cbam" "implementation-t-mbconv" "yolov9-t")
-activations=("selu" "h_swish" "elu" "sinlu" "sinlu_pozitive")
+activations=("silu")
 optimizers=("SGD" "Adam" "LION")
 
 # Create log directory if it doesn't exist
