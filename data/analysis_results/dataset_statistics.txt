@@ -1,0 +1,25 @@
+===== YOLOv9 Dataset Analysis =====
+
+Classes: ['anormal', 'normal']
+Number of classes: 2
+Total images: 189
+
+Distribution of classes:
+  - anormal: 1327 annotations (48.77%)
+  - normal: 1394 annotations (51.23%)
+
+Image size statistics:
+  - Average dimensions: 1045.8 x 173.4
+  - Minimum dimensions: 765 x 127
+  - Maximum dimensions: 1088 x 219
+
+Bounding box statistics:
+  - Total bounding boxes: 2721
+  - Average boxes per image: 14.40
+  - Maximum boxes in an image: 23
+  - Images without any boxes: 0
+
+Saved class distribution plot to /mnt/newdisk/dosyalar/Dosyalar/projeler/py/yolov9-bit/data/analysis_results/class_distribution.png
+Saved objects per image plot to /mnt/newdisk/dosyalar/Dosyalar/projeler/py/yolov9-bit/data/analysis_results/objects_per_image.png
+Saved box size distribution plot to /mnt/newdisk/dosyalar/Dosyalar/projeler/py/yolov9-bit/data/analysis_results/box_size_distribution.png
+Saved aspect ratio distribution plot to /mnt/newdisk/dosyalar/Dosyalar/projeler/py/yolov9-bit/data/analysis_results/aspect_ratio_distribution.png
