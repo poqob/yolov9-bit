@@ -2,6 +2,8 @@
 
 Classes: ['anormal', 'normal']
 Number of classes: 2
+===== Analysis for all =====
+
 Total images: 189
 
 Distribution of classes:
@@ -19,7 +21,70 @@ Bounding box statistics:
   - Maximum boxes in an image: 23
   - Images without any boxes: 0
 
-Saved class distribution plot to /mnt/newdisk/dosyalar/Dosyalar/projeler/py/yolov9-bit/data/analysis_results/class_distribution.png
-Saved objects per image plot to /mnt/newdisk/dosyalar/Dosyalar/projeler/py/yolov9-bit/data/analysis_results/objects_per_image.png
-Saved box size distribution plot to /mnt/newdisk/dosyalar/Dosyalar/projeler/py/yolov9-bit/data/analysis_results/box_size_distribution.png
-Saved aspect ratio distribution plot to /mnt/newdisk/dosyalar/Dosyalar/projeler/py/yolov9-bit/data/analysis_results/aspect_ratio_distribution.png
+Saved class distribution plot to /mnt/newdisk/dosyalar/Dosyalar/projeler/py/yolov9-bit/data/analysis_results/all_class_distribution.png
+Saved objects per image plot to /mnt/newdisk/dosyalar/Dosyalar/projeler/py/yolov9-bit/data/analysis_results/all_objects_per_image.png
+===== Analysis for train =====
+
+Total images: 132
+
+Distribution of classes:
+  - anormal: 895 annotations (47.35%)
+  - normal: 995 annotations (52.65%)
+
+Image size statistics:
+  - Average dimensions: 1044.8 x 171.4
+  - Minimum dimensions: 765 x 127
+  - Maximum dimensions: 1086 x 209
+
+Bounding box statistics:
+  - Total bounding boxes: 1890
+  - Average boxes per image: 14.32
+  - Maximum boxes in an image: 23
+  - Images without any boxes: 0
+
+Saved class distribution plot to /mnt/newdisk/dosyalar/Dosyalar/projeler/py/yolov9-bit/data/analysis_results/train_class_distribution.png
+Saved objects per image plot to /mnt/newdisk/dosyalar/Dosyalar/projeler/py/yolov9-bit/data/analysis_results/train_objects_per_image.png
+===== Analysis for val =====
+
+Total images: 28
+
+Distribution of classes:
+  - anormal: 198 annotations (49.38%)
+  - normal: 203 annotations (50.62%)
+
+Image size statistics:
+  - Average dimensions: 1053.3 x 179.0
+  - Minimum dimensions: 941 x 156
+  - Maximum dimensions: 1087 x 219
+
+Bounding box statistics:
+  - Total bounding boxes: 401
+  - Average boxes per image: 14.32
+  - Maximum boxes in an image: 18
+  - Images without any boxes: 0
+
+Saved class distribution plot to /mnt/newdisk/dosyalar/Dosyalar/projeler/py/yolov9-bit/data/analysis_results/val_class_distribution.png
+Saved objects per image plot to /mnt/newdisk/dosyalar/Dosyalar/projeler/py/yolov9-bit/data/analysis_results/val_objects_per_image.png
+===== Analysis for test =====
+
+Total images: 29
+
+Distribution of classes:
+  - normal: 196 annotations (45.58%)
+  - anormal: 234 annotations (54.42%)
+
+Image size statistics:
+  - Average dimensions: 1043.1 x 176.8
+  - Minimum dimensions: 866 x 152
+  - Maximum dimensions: 1088 x 218
+
+Bounding box statistics:
+  - Total bounding boxes: 430
+  - Average boxes per image: 14.83
+  - Maximum boxes in an image: 19
+  - Images without any boxes: 0
+
+Saved class distribution plot to /mnt/newdisk/dosyalar/Dosyalar/projeler/py/yolov9-bit/data/analysis_results/test_class_distribution.png
+Saved objects per image plot to /mnt/newdisk/dosyalar/Dosyalar/projeler/py/yolov9-bit/data/analysis_results/test_objects_per_image.png
+
+Saved dataset summary plot to /mnt/newdisk/dosyalar/Dosyalar/projeler/py/yolov9-bit/data/analysis_results/dataset_summary.png
