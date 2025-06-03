@@ -71,4 +71,4 @@ entity: null
 upload_dataset: false
 bbox_interval: -1
 artifact_alias: latest
-save_dir: runs/train/yolov9-t_silu_Adam
+save_dir: runs/train/yolov9-t_silu_Adam2
