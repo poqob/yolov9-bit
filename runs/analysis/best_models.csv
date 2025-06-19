@@ -1,0 +1,13 @@
+model_name,architecture,activation,optimizer,model_size_mb,best_map50,best_map50_95,best_precision,best_recall,best_epoch,epochs,last_box_loss,last_cls_loss,last_dfl_loss
+implementation-residual_elu_SGD,implementation-residual,elu,SGD,6.5916,0.8759,0.5961,0.8462,0.8843,81,100,1.6149,1.1922,1.5159
+implementation-residual_h_swish_SGD,implementation-residual_h,swish,SGD,6.5916,0.8759,0.5961,0.8462,0.8843,81,100,1.6149,1.1922,1.5159
+implementation-residual_sinlu_pozitive_SGD,implementation-residual_sinlu,pozitive,SGD,6.5916,0.8759,0.5961,0.8462,0.8843,81,100,1.6149,1.1922,1.5159
+implementation-t-cbam_elu_SGD,implementation-t-cbam,elu,SGD,7.5902,0.8875,0.6265,0.8363,0.8869,94,100,1.7613,1.3646,1.6064
+implementation-t-cbam_h_swish_SGD2,implementation-t-cbam_h,swish,SGD,7.5902,0.8875,0.6265,0.8363,0.8869,94,100,1.7613,1.3646,1.6064
+implementation-t-cbam_sinlu_pozitive_SGD,implementation-t-cbam_sinlu,pozitive,SGD,7.5902,0.8875,0.6265,0.8363,0.8869,94,100,1.7613,1.3646,1.6064
+implementation-t-mbconv_elu_SGD,implementation-t-mbconv,elu,SGD,6.7209,0.8681,0.577,0.8165,0.8679,89,100,1.7037,1.2521,1.6062
+implementation-t-mbconv_h_swish_SGD,implementation-t-mbconv_h,swish,SGD,6.7209,0.8681,0.577,0.8165,0.8679,89,100,1.7037,1.2521,1.6062
+implementation-t-mbconv_sinlu_pozitive_SGD,implementation-t-mbconv_sinlu,pozitive,SGD,6.721,0.8681,0.577,0.8165,0.8679,89,100,1.7037,1.2521,1.6062
+yolov9-t_elu_SGD,yolov9-t,elu,SGD,5.7934,0.8683,0.5835,0.8518,0.8349,88,100,1.5713,1.169,1.4949
+yolov9-t_h_swish_SGD,yolov9-t_h,swish,SGD,5.7935,0.8683,0.5835,0.8518,0.8349,88,100,1.5713,1.169,1.4949
+yolov9-t_sinlu_pozitive_SGD,yolov9-t_sinlu,pozitive,SGD,5.7935,0.8683,0.5835,0.8518,0.8349,88,100,1.5713,1.169,1.4949
